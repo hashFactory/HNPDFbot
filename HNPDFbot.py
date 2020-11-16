@@ -5,7 +5,7 @@
 import logging, random
 
 #import pdfkit
-from hn import HN
+#from hn import HN
 #from bs4 import BeautifulSoup
 
 from datetime import time
