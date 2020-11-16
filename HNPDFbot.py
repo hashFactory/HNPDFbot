@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*-
 # This program is dedicated to the public domain under the CC0 license.
 
-import logging, random 
-from bs4 import BeautifulSoup
+import logging, random
 
-from wkhtmltopdf import wk
+#import pdfkit
 from hn import HN
+#from bs4 import BeautifulSoup
 
 from datetime import time
 import sys
@@ -24,7 +24,6 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 logger = logging.getLogger(__name__)
 
-alarm_text = ""
 updater = None
 
 secret = ""
@@ -32,7 +31,7 @@ secret = ""
 def read_secret():
     global secret
     with open("secret.key") as f:
-        secret = f.read()
+        secret = "".join(f.read().split())
 
 def start(update, context):
     """Send a message when the command /start is issued."""
@@ -41,18 +40,6 @@ def start(update, context):
 def help(update, context):
     """Send a message when the command /help is issued."""
     update.message.reply_text('Type \'/\' for list of functions')
-
-def remind(update, context):
-    """daily reminder"""
-    global alarm_text
-    context.bot.send_message(chat_id=update.message.chat_id, text='Setting daily notification!')
-    t = time(hour=random.randint(10, 16), minute=random.randint(0, 59))
-    alarm_text = " ".join(update.message.text.split(" ")[1:])
-    context.job_queue.run_daily(remind_alarm, t, days=tuple(range(6)), context=update.message.chat_id)
-
-def remind_alarm(context):
-    global alarm_text
-    context.bot.send_message(chat_id=context.job.context, text="Reminder for: "+alarm_text)
 
 def nope(update, context):
     """Echo the user message."""
@@ -70,6 +57,8 @@ def main():
     """Start the bot."""
     global updater
     # Create the Updater and pass it your bot's token.
+    read_secret()
+    print("|" + secret + "|")
     updater = Updater(secret, use_context=True)
 
     # Get the dispatcher to register handlers
@@ -88,7 +77,7 @@ def main():
 
     # Start the Bot
     updater.start_polling()
-    print "Started polling..."
+    print("Started polling...")
 
     # Run the bot until you press Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
