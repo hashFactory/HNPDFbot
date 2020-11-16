@@ -1,5 +1,3 @@
-secret = "1391541569:AAEB-Lj2MQ3woBoN4zSVPsT-5djrLnM7Cg4"
-
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # This program is dedicated to the public domain under the CC0 license.
@@ -28,6 +26,13 @@ logger = logging.getLogger(__name__)
 
 alarm_text = ""
 updater = None
+
+secret = ""
+
+def read_secret():
+    global secret
+    with open("secret.key") as f:
+        secret = f.read()
 
 def start(update, context):
     """Send a message when the command /start is issued."""
