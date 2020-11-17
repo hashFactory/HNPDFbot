@@ -1,3 +1,4 @@
 secret.key
 __pycache__/
 *.pyc
+.vscode/
