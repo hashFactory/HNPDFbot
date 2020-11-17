@@ -1,4 +1,5 @@
 # HNPDFbot
+### By [@sarrisv](https://github.com/sarrisv) and [@hashFactory](https://github.com/hashFactory)
 Telegram bot to navigate and access HackerNews stories on mobile
 
 @HNPDFbot
