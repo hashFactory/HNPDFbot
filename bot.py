@@ -7,6 +7,7 @@
 import logging
 
 from hn_interaction import *
+from renderer import *
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, ParseMode
 from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, CallbackContext, ConversationHandler
@@ -172,8 +173,13 @@ def read_secret():
     return secret
 
 def main():
+    # create cache folder if it doesn't exist yet
     if not os.path.isdir("cache"):
         os.mkdir("cache")
+
+    # pick renderer depending on what's installed
+    # chromium gets much better results than WK
+    choose_engine()
 
     # Create the Updater and pass it your bot's token.
     # Make sure to set use_context=True to use the new context based callbacks
