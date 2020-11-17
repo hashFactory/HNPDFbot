@@ -7,6 +7,17 @@ import os.path
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from telegram import ParseMode
 
+pdf_options = {
+    'page-size': 'Letter',
+    'margin-top': '0.0in',
+    'margin-right': '0.0in',
+    'margin-bottom': '0.0in',
+    'margin-left': '0.0in',
+    'encoding': "UTF-8",
+    'no-outline': None,
+	'javascript-delay': '1000'
+}
+
 def get_top_stories(page, number, offset):
 	url = "https://hacker-news.firebaseio.com/v0/topstories.json"
 	r = requests.get(url)
@@ -33,7 +44,7 @@ def get_pdf(url, title):
 	filename = sanitize_filename(title)[:50] + ".pdf"
 	path = "cache/" + filename
 	if not os.path.isfile(path):
-		pdfkit.from_url(url, path)
+		pdfkit.from_url(url, path, options=pdf_options)
 	return path
 
 def get_html(url):
