@@ -35,5 +35,5 @@ def get_top_stories(number, offset):
 def pretty_print(stories, offset):
 	message_buffer = ""
 	for i in range(0, len(stories)):
-		message_buffer += "**" + str(i+offset+1) + "**" + "\. " + re.escape(stories[i].title) + "\n"
+		message_buffer += "*" + str(i+offset+1) + "*" + "\. " + re.escape(stories[i].title) + "\n"
 	return message_buffer
