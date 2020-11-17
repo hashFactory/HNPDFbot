@@ -161,7 +161,7 @@ def main():
     # Create the Updater and pass it your bot's token.
     # Make sure to set use_context=True to use the new context based callbacks
     # Post version 12 this will no longer be necessary
-    updater = Updater("1457818035:AAFHuUULruI0ULhuhbNevSJEDBbXABZVfw8", use_context=True)
+    updater = Updater("TOKEN", use_context=True)
 
     updater.dispatcher.add_handler(CommandHandler('start', start))
     updater.dispatcher.add_handler(CommandHandler('help', help_command))
