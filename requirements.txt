@@ -1,0 +1,3 @@
+pdfkit
+python-telegram-bot
+requests
