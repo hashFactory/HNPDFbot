@@ -120,8 +120,10 @@ def reply_post(update: Update, context: CallbackContext) -> int:
 
     try: 
         # get pdf
-        #pdf = get_pdf(context.user_data['stories'][int(query.data)].id)
+        pdf = get_pdf(context.user_data['stories'][int(query.data)].url)
         query.answer()
+
+        query.message.reply_document(open(pdf, 'rb'))
 
         #query.edit_message_text(context.user_data['stories'][int(query.data)])
         # send pdf to user
@@ -157,11 +159,20 @@ def show_child_comment(update: Update, context: CallbackContext) -> int:
 
     return COMMENTS
 
+def read_secret():
+    global secret
+    with open("secret.key") as f:
+        secret = "".join(f.read().split())
+    return secret
+
 def main():
+    if not os.path.isdir("cache"):
+        os.mkdir("cache")
+
     # Create the Updater and pass it your bot's token.
     # Make sure to set use_context=True to use the new context based callbacks
     # Post version 12 this will no longer be necessary
-    updater = Updater("TOKEN", use_context=True)
+    updater = Updater(read_secret(), use_context=True)
 
     updater.dispatcher.add_handler(CommandHandler('start', start))
     updater.dispatcher.add_handler(CommandHandler('help', help_command))
