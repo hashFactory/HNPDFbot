@@ -132,11 +132,13 @@ def reply_post(update: Update, context: CallbackContext) -> int:
         #query.edit_message_text(context.user_data['stories'][int(query.data)])
         # send pdf to user
         # ???
-        html = get_html(context.user_data['stories'][int(query.data)])
+        #html = get_html(context.user_data['stories'][int(query.data)])
         # setup comment interface
-        query.message.reply_markdown_v2('Comment: \n', reply_markup=reply_markup)
+        #query.message.reply_markdown_v2('Comment: \n', reply_markup=reply_markup)
         return STORIES
     except:
+        context.bot.delete_message(chat_id=fetching.chat_id, message_id=fetching.message_id)
+        query.message.reply_markdown_v2("Could not complete request \):")
         return STORIES
 
 def show_prev_comment(update: Update, context: CallbackContext) -> int:
