@@ -25,8 +25,12 @@ def pretty_print_stories(page, stories, offset):
 	message_buffer += "\nPage: " + str(page+1)
 	return message_buffer
 
-def get_pdf(url):
-	filename = hashlib.md5(url.encode()).hexdigest() + ".pdf"
+def sanitize_filename(filename):
+	remove_punctuation_map = dict((ord(char), None) for char in '\/*?:"<>|')
+	return filename.translate(remove_punctuation_map)
+
+def get_pdf(url, title):
+	filename = sanitize_filename(title)[:50] + ".pdf"
 	path = "cache/" + filename
 	if not os.path.isfile(path):
 		pdfkit.from_url(url, path)

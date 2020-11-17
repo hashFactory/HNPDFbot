@@ -120,7 +120,7 @@ def reply_post(update: Update, context: CallbackContext) -> int:
 
     try: 
         # get pdf
-        pdf = get_pdf(context.user_data['stories'][int(query.data)].url)
+        pdf = get_pdf(context.user_data['stories'][int(query.data)].url, context.user_data['stories'][int(query.data)].title)
         query.answer()
 
         query.message.reply_document(open(pdf, 'rb'))
