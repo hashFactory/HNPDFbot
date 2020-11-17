@@ -118,12 +118,16 @@ def reply_post(update: Update, context: CallbackContext) -> int:
     query = update.callback_query
     reply_markup = InlineKeyboardMarkup(comment_keyboard)
 
+    fetching = query.message.reply_markdown_v2(text="_Fetching webpage\.\.\._")
     try: 
         # get pdf
         pdf = get_pdf(context.user_data['stories'][int(query.data)].url, context.user_data['stories'][int(query.data)].title)
         query.answer()
 
+        # inform user of progress & send doc
+        context.bot.edit_message_text(chat_id=fetching.chat_id, message_id=fetching.message_id, text="_Sending PDF_\.\.\.", parse_mode=ParseMode.MARKDOWN_V2)
         query.message.reply_document(open(pdf, 'rb'))
+        context.bot.delete_message(chat_id=fetching.chat_id, message_id=fetching.message_id)
 
         #query.edit_message_text(context.user_data['stories'][int(query.data)])
         # send pdf to user
